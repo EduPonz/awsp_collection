@@ -20,6 +20,12 @@ cartesian_r = [cosd(to_normal_angle(r(2))) * r(1), sind(to_normal_angle(r(2))) *
 cartesian_p1 = [cosd(to_normal_angle(r1(2))) * r1(1), sind(to_normal_angle(r1(2))) * r1(1)]
 cartesian_p2 = [cosd(to_normal_angle(r2(2))) * r2(1), sind(to_normal_angle(r2(2))) * r2(1)]
 
+x_coords = [cartesian_r(1), cartesian_p1(1), cartesian_p2(1)]; % X-coordinates
+y_coords = [cartesian_r(2), cartesian_p1(2), cartesian_p2(2)]; % Y-coordinates
+
+plot(x_coords, y_coords, 'ro')
+grid on
+
 function [arc, az] = haversine(p1, p2)
     [arc, az] = distance(p1(2), p1(3), p2(2), p2(3));
     arc = deg2rad(arc) * p1(1);
