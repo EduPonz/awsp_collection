@@ -1,4 +1,0 @@
-For the ESC_control class to work, you need to install pigpio python library.
-This is done using the shell command: 
-
-sudo pip install pigpio
