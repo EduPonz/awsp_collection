@@ -1,18 +1,46 @@
 %syms phi theta psi; 
-phi =  -pi/2;
-theta = pi;
-%psi = pi/2; 
 
-Rx = [cos(phi) sin(phi); -sin(phi) cos(phi)]
-%%inv(Rx)
-%%transpose(Rx)
-Ry = [cos(theta) 0 -sin(theta); 0 1 0; sin(theta) 0  cos(theta)]
-%Rz = [cos(psi) sin(psi) 0; -sin(psi) cos(psi) 0; 0 0 1]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------- Rotation angles around the X, Y and Z axes --------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+phi = 0;    % Extrinsic Roll
+theta = 0;  % Extrinsic Pitch
+psi = pi/2; % Extrinsic Yaw
 
-%Rf = transpose(Rz)*transpose(Ry)*transpose(Rx)
-Rf = Ry*Rx
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------- J_1 origin O and point P -----------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+O = [1; 3; 0];      % J_1 origin
+P_J1 = [1; 1; 0];   % P in J_1 coordinates
 
-SampleVector = [2; -1];
-Rf*SampleVector
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------- Rotation matrices around the X, Y and Z axes -------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Rx = [1        0               0;
+      0     cos(phi)    sin(phi);
+      0     -sin(phi)   cos(phi)];
 
-%transpose(Rf)*[-3;2;1]
+Ry = [cos(theta)    0   -sin(theta);
+      0             1             0;
+      sin(theta)    0    cos(theta)];
+
+Rz = [cos(psi)  -sin(psi)   0;
+      sin(psi)  cos(psi)    0;
+      0             0       1];
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------- Transformation matrix from J_1 to J_O ----------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+R = Rz*Ry*Rx;
+
+T = [R(1,1) R(1,2) R(1,3) O(1);
+     R(2,1) R(2,2) R(2,3) O(2);
+     R(3,1) R(3,2) R(3,3) O(3);
+     0       0       0       1;]
+ 
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------- Transformation matrix from J_1 to J_O ----------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ P_J1 = [P_J1; 1];  % P in J_1 coordinates with a fourth element 1
+ P_J0 = T * P_J1    % P in J_0 coordinates
