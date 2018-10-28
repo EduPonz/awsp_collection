@@ -32,4 +32,6 @@ Damping = -mass*ExpValues(2) %Damping in surge, sway and yaw is defined by m/s, 
 plot(time, ExpExpression, 'LineWidth', 2) %Plotting the fit
 hold on;
 plot (time, Velocity) %Plotting the test results
+
+legend('Fit', 'Test 1', 'Test 2', 'Test 3');
 hold off;
