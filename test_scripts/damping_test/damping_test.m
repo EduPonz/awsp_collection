@@ -1,8 +1,8 @@
 %%Load excel tables %%
 
-filedata1 = 'p5fakedata1.xlsx';
-filedata2 = 'p5fakedata2.xlsx';
-filedata3 = 'p5fakedata3.xlsx';
+filedata1 = 'fakedata1.xlsx';
+filedata2 = 'fakedata2.xlsx';
+filedata3 = 'fakedata3.xlsx';
 
 %% Data definitions
 
