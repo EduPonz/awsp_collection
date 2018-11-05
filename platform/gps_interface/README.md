@@ -4,64 +4,17 @@ To build run:
     sudo ./gps
 
 Output example:
+
     Connected to port: 3
 
-    Iteration number 0
-    ------------------
-            Timestamp -> 200225.000
-            Latitude -> 57.052898N
-            Longitude -> 9.915720E
-
-    Iteration number 1
-    ------------------
-            Timestamp -> 200226.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915722E
-
-    Iteration number 2
-    ------------------
-            Timestamp -> 200227.000
-            Latitude -> 57.052910N
-            Longitude -> 9.915725E
-
-    Iteration number 3
-    ------------------
-            Timestamp -> 200228.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 4
-    ------------------
-            Timestamp -> 200229.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 5
-    ------------------
-            Timestamp -> 200230.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 6
-    ------------------
-            Timestamp -> 200231.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 7
-    ------------------
-            Timestamp -> 200232.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 8
-    ------------------
-            Timestamp -> 200233.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
-
-    Iteration number 9
-    ------------------
-            Timestamp -> 200234.000
-            Latitude -> 57.052902N
-            Longitude -> 9.915725E
+    Number of lines read -> 1
+    POSITION
+    ========================
+    Message --------------> $GPGGA,083214.000,5703.1779,N,00954.9530,E,1,9,1.39,23.0,M,42.5,M,,*6E
+    Timestamp ------------> 083214.000
+    Latitude -------------> 57.053
+    Longitude ------------> 9.91588
+    Fix ------------------> 1
+    Number of satelites --> 9
+    Horizontal Precision -> 1.39
+    Altitude -------------> 23
