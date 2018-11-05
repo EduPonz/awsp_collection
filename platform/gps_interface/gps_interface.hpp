@@ -22,6 +22,7 @@ class GPSInterface
 {
     private:
         const std::string POSITION_START_ = "$GPGGA";
+        std::string read_line_;
         int port_;
         position position_;
 

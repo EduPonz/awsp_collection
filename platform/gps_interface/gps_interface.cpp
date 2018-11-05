@@ -1,7 +1,11 @@
 #include "gps_interface.hpp"
 
 // ******************************** CONSTRUCTORS-DESTRUCTORS *******************************
-GPSInterface::GPSInterface() { }
+GPSInterface::GPSInterface()
+{
+    read_line_ = "";
+    port_ = 0;
+}
 
 GPSInterface::~GPSInterface() { }
 
@@ -80,16 +84,15 @@ std::vector<std::string> GPSInterface::read_raw_lines_()
 {
     char received;
     std::vector<std::string> lines;
-    std::string line = "";
     while (serialDataAvail(port_))
     {
         received = serialGetchar(port_);
         if (received != '\n')
-            line += received;
+            read_line_ += received;
         else
         {
-            lines.push_back(line);
-            line = "";
+            lines.push_back(read_line_);
+            read_line_ = "";
         }
     }
 
