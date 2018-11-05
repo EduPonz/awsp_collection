@@ -8,25 +8,34 @@
 #include <wiringSerial.h>
 
 struct position {
-    std::string timestamp = "";
-    std::string latitude = "";
-    std::string longitude = "";
+    std::string message;        // The received message
+    std::string timestamp;      // UTC time hhmmss.milliseconds
+    float latitude;             // Always referred to North
+    float longitude;            // Always referred to East
+    int fix;                    // 0 -> no fix, 1 -> fix, 2 -> dif fix
+    int number_of_satelites;    // Satelites on view
+    float horizontal_precision; // In meters;
+    float altitude;             // Over sea level
 };
 
 class GPSInterface
 {
     private:
+        const std::string POSITION_START_ = "$GPGGA";
         int port_;
         position position_;
-        std::vector<std::string> read_raw_lines_();
-        bool populate_position_(std::string position_line);
-        std::string parse_to_degrees_(std::string str);
+
         std::vector<std::string> break_string_(std::string str, char separator);
+        float parse_to_degrees_(std::string str);
+        bool parse_raw_line_(std::string line);
+        bool populate_position_(std::string position_line);
+        std::vector<std::string> read_raw_lines_();
     public:
         GPSInterface();
         ~GPSInterface();
-        bool open_connection(const char* serial_port, long baud_rate);
         bool close_connection();
-        int get_port();
         position get_position();
+        int get_port();
+        bool open_connection(const char* serial_port, long baud_rate);
+        int read_lines();
 };
