@@ -28,8 +28,9 @@ int64_t get_epoch()
 int main() 
 {
     GPSInterface gps;
+    std::cout << "GPS Inteface created!" << std::endl;
 
-    if (gps.open_connection("/dev/ttyS0", 9600))
+    if (gps.open_connection("/dev/serial0", 9600))
         std::cout << "Connected to port: " << gps.get_port() << std::endl;
     else
     {
@@ -40,6 +41,8 @@ int main()
     int num_lines = 0;
     int64_t last_position_time = get_epoch();
     int64_t position_time = get_epoch();
+    bool fix_print = false;
+
     while (true)
     {
         num_lines = gps.read_lines();
@@ -55,6 +58,16 @@ int main()
             std::cout << "----------------------------------------------------------------------------------" << std::endl;
             print_position(last_position);
             last_position_time = get_epoch();
+            fix_print = false;
+        }
+        else
+        {
+            if (!fix_print)
+            {
+                int fix = gps.get_position().fix;
+                std::cout << "Fix " << fix << std::endl;
+                fix_print = true;
+            }
         }
     }
     gps.close_connection();

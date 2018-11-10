@@ -5,6 +5,7 @@ GPSInterface::GPSInterface()
 {
     read_line_ = "";
     port_ = 0;
+    position_.fix = 0;
 }
 
 GPSInterface::~GPSInterface() { }
@@ -77,7 +78,11 @@ bool GPSInterface::populate_position_(std::string position_line)
 
         return true;
     }
-    else return false;
+    else
+    {
+        position_.fix = 0;
+        return false;
+    }
 }
 
 std::vector<std::string> GPSInterface::read_raw_lines_()
