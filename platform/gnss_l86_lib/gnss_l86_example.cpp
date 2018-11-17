@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include "gps_interface.hpp"
+#include "gnss_l86_lib.h"
 
 void print_position(position position)
 {
@@ -27,11 +27,11 @@ int64_t get_epoch()
 
 int main() 
 {
-    GPSInterface gps;
-    std::cout << "GPS Inteface created!" << std::endl;
+    GnssInterface gnss;
+    std::cout << "GNSS Inteface created!" << std::endl;
 
-    if (gps.open_connection("/dev/serial0", 9600))
-        std::cout << "Connected to port: " << gps.get_port() << std::endl;
+    if (gnss.open_connection("/dev/serial0", 9600))
+        std::cout << "Connected to port: " << gnss.get_port() << std::endl;
     else
     {
         std::cout << "Cannot connect" << std::endl;
@@ -43,34 +43,40 @@ int main()
     int64_t position_time = get_epoch();
     bool fix_print = false;
 
-    while (true)
+    try
     {
-        num_lines = gps.read_lines();
-        position last_position = gps.get_position();
+        while (true)
+        {
+            num_lines = gnss.read_lines();
+            position last_position = gnss.get_position();
 
-        if (num_lines > 0)
-        {
-            position_time = get_epoch();
-            std::cout << std::endl;
-            std::cout << "********************************** NEW POSITION **********************************" << std::endl;
-            std::cout << "Ellapsed time --------> " << position_time - last_position_time << std::endl;
-            std::cout << "Number of lines read -> " << num_lines                          << std::endl;
-            std::cout << "----------------------------------------------------------------------------------" << std::endl;
-            print_position(last_position);
-            last_position_time = get_epoch();
-            fix_print = false;
-        }
-        else
-        {
-            if (!fix_print)
+            if (num_lines > 0)
             {
-                int fix = gps.get_position().fix;
-                std::cout << "Fix " << fix << std::endl;
-                fix_print = true;
+                position_time = get_epoch();
+                std::cout << std::endl;
+                std::cout << "********************************** NEW POSITION **********************************" << std::endl;
+                std::cout << "Ellapsed time --------> " << position_time - last_position_time << std::endl;
+                std::cout << "Number of lines read -> " << num_lines                          << std::endl;
+                std::cout << "----------------------------------------------------------------------------------" << std::endl;
+                print_position(last_position);
+                last_position_time = get_epoch();
+                fix_print = false;
+            }
+            else
+            {
+                if (!fix_print)
+                {
+                    int fix = gnss.get_position().fix;
+                    std::cout << "Fix " << fix << std::endl;
+                    fix_print = true;
+                }
             }
         }
     }
-    gps.close_connection();
+    catch (int e)
+    {
+        gnss.close_connection();
+    }
 
     return 0;
 }
