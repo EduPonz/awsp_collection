@@ -9,11 +9,11 @@
  
  %% Boat Parameters %%
  
-mass = 15;
-inertia_z = 5.414;     % Inertia around z
+mass = 16.084;
+inertia_z = 5.452985;     % Inertia around z
 L1 = 0.61;                 % Distance from the motor shaft to x-axis [m] 
-damping_yaw = 3.5;
-damping_surge = 2.7; 
+damping_yaw = 1.20348 ;
+damping_surge = 1.5437; 
 
 %% Time settings %%
 
@@ -23,8 +23,8 @@ time_points = length(t);    % Size of the time vector (total amount of time poin
 
 %% Forces and Torques %%
 
-ForceL = 2.7;                                         % Force in left motor [N]
-ForceR = 2;                                         % Force in right motor [N]
+ForceL = 1.25;                                         % Force in left motor [N]
+ForceR = 1.25;                                         % Force in right motor [N]
 input_torque = L1*ForceL - L1*ForceR;   % Torque that creates to rotation in yaw
 
 %% Velocities and Accelerations %%
@@ -139,8 +139,8 @@ angular_vel = angular_acc_for_constant_ang_vel*400000;
  figure(2)
  plot(t, linear_vel)
  title('Linear Velocity')
- xlim([0 30])
- ylim([0 20])
+ xlim([0 40])
+ ylim([0 5])
 % 
 % figure(3)
 % plot(t, linear_pos_displacement)
