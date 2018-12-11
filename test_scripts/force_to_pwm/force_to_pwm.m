@@ -15,26 +15,28 @@ fit_forward_right = fit(force_forward_right,increment_decrease, 'poly1')
 fit_backward_left = fit(force_backward_left,increment_decrease, 'poly1')
 fit_backward_right = fit(force_backward_right,increment_increase,'poly1')
 
-figure(1)
+figure('Name','Left Motor','NumberTitle','off')
+subplot(2,1,1);
 plot(force_forward_left, increment_increase, '*')
-title('Forward Left')
+title('Left Forward')
 hold on;
 plot(fit_forward_left);
 
-figure(2)
-plot(force_forward_right, increment_decrease, '*')
-title('Forward Right')
-hold on;
-plot(fit_forward_right);
-
-figure(3)
+subplot(2,1,2);
 plot(force_backward_left, increment_decrease, '*')
-title('Backward Left')
+title('Left Backward')
 hold on;
 plot(fit_backward_left);
 
-figure(4)
+figure('Name','Right Motor','NumberTitle','off')
+subplot(2,1,1);
+plot(force_forward_right, increment_decrease, '*')
+title('Right Forward')
+hold on;
+plot(fit_forward_right);
+
+subplot(2,1,2);
 plot(force_backward_right, increment_increase, '*')
-title('Backward Right')
+title('Right Backward')
 hold on;
 plot(fit_backward_right);
