@@ -4,6 +4,7 @@
  initial_position = [0, 0]; 
  initial_bearing = 0;      % Initial angular position [rad]
  initial_velocity = 0;
+ initial_ang_vel = 0;
  
  goal_position  = [2,2];
  
@@ -12,19 +13,19 @@
 mass = 16.084;
 inertia_z = 5.452985;     % Inertia around z
 L1 = 0.61;                 % Distance from the motor shaft to x-axis [m] 
-damping_yaw = 1.20348 ;
+damping_yaw = 1.20348;
 damping_surge = 1.5437; 
 
 %% Time settings %%
 
 time_interval = 0.001;
-t = 0 : time_interval : 90;  % Discrete time vector
+t = 0 : time_interval : 20;  % Discrete time vector
 time_points = length(t);    % Size of the time vector (total amount of time points)
 
 %% Forces and Torques %%
 
-ForceL = 1.25;                                         % Force in left motor [N]
-ForceR = 1.25;                                         % Force in right motor [N]
+ForceL = 2.5;                                         % Force in left motor [N]
+ForceR = -2.5;                                         % Force in right motor [N]
 input_torque = L1*ForceL - L1*ForceR;   % Torque that creates to rotation in yaw
 
 %% Velocities and Accelerations %%
@@ -38,6 +39,7 @@ linear_pos_displacement = zeros([1 time_points]);               % generates a ve
 angular_acc = zeros([1 time_points]);           % generates a vector with the length of the time vector with all zeros
 angular_acc(1) = input_torque/(inertia_z);      % Initial angular acceleration
 angular_vel = zeros([1 time_points]);           % generates a vector with the length of the time vector with all zeros
+angular_vel(1) = initial_ang_vel;
 angular_pos = zeros([1 time_points]);           % generates a vector with the length of the time vector with all zeros
 angular_pos(1) = initial_bearing;           % Initial angular position (orientation of the boat in earth frame)
 
@@ -77,8 +79,6 @@ x_goal = goal_position(1);
 y_goal = goal_position(2);
 %closest_angle = 0.1;
 
-
-
 for j = 2 : time_points
 
 cartessian_position_x(j) =  cartessian_position_x(j-1) + xVelocity(j-1) *time_interval + (1/2) * xAcc (j-1) * time_interval^2;
@@ -93,21 +93,7 @@ angle_difference = atan2((y_goal - cartessian_position_y(j)), (x_goal - cartessi
 % end
 
 end
-
-constant_vel = linear_vel(90/0.001)
-
-linear_acc_for_const_vel =(ForceL + ForceR)/(mass + damping_surge*900000);
-linear_vel_constant= linear_acc_for_const_vel*900000
-
-
-
-desired_vel = 5;
-Forces_magnitude = (desired_vel*mass + desired_vel*damping_surge*500000)/500000
-
-constant_ang_vel = angular_vel(40/0.001);
-
-angular_acc_for_constant_ang_vel = (input_torque)/(inertia_z + damping_yaw*400000);                 
-angular_vel = angular_acc_for_constant_ang_vel*400000;                     
+ 
 
 
 
@@ -136,11 +122,11 @@ angular_vel = angular_acc_for_constant_ang_vel*400000;
 % xlim([0 30])
 % ylim([0 10])
 % 
- figure(2)
- plot(t, linear_vel)
- title('Linear Velocity')
- xlim([0 40])
- ylim([0 5])
+%  figure(2)
+%  plot(t, linear_vel)
+%  title('Linear Velocity')
+%  xlim([0 40])
+%  ylim([0 5])
 % 
 % figure(3)
 % plot(t, linear_pos_displacement)
@@ -169,12 +155,12 @@ angular_vel = angular_acc_for_constant_ang_vel*400000;
 % xlim([0 30])
 % ylim([0 10])
 % 
-% figure(6)
-% plot(t, angular_vel)
-% title('angular vel')
-% xlim([0 30])
-% ylim([0 5])
-% 
+figure(6)
+plot(t, angular_vel)
+title('angular vel')
+xlim([0 30])
+ylim([0 5])
+
 % figure(7)
 % plot(t, angular_pos)
 % title('Angular Position')
