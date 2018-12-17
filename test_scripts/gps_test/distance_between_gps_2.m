@@ -1,11 +1,11 @@
 r = 6371; % Earth radious
 % theta -> latitude (N)
 % phi -> longitude (E)
-% beta -> bearing (angle between two point with 0º in N and increasing
+% beta -> bearing (angle between two point with 0ï¿½ in N and increasing
 % clockwise)
 % p = [r, theta, phi]
 
-p1 = [r, 57.049057, 9.921284]; % Rerence point (start)
+p1 = [r, 57.049057, 9.921284]; % Reference point (start)
 p2 = [r, 57.059295, 9.935559]; % Actual location
 p3 = [r, 57.050027, 9.918123]; % Destination
 
